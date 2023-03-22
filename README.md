@@ -1,114 +1,45 @@
-# react js hello world 2023
+# react js hello world 2023 + github actions deployment
 
 reacj hello world for 2023
 
-# Code Sandbox
-
-1. https://codesandbox.io/s/react-js-hello-world-9dn2lc
-1. https://codesandbox.io/s/react-hello-world-31-01-23-sl4d2m (recommended)
+note: this is borrowed from my react js project, available, here, https://github.com/Jay-study-nildana/FrontEndForStudents/tree/main/ReactJSForStudents/helloworld2023
 
 # things to remember
 
-1. remember that you have to include bootstrap and font related code in index.html.
-1. when using CSS classes, use 'className'
-
-# standard libraries to add 
-
-```
-npm install @babel/runtime typescript @babel/core @redux-devtools/extension @testing-library/jest-dom @testing-library/react @testing-library/user-event react-bootstrap react-dom react-redux react-router-dom redux redux-persist redux-thunk reselect
-```
-
-1. @babel/runtime
-1. typescript
-1. @babel/core
-1. @redux-devtools/extension
-1. @testing-library/jest-dom
-1. @testing-library/react
-1. @testing-library/user-event
-1. react-bootstrap
-1. react-dom
-1. react-redux
-1. react-router-dom
-1. redux
-1. redux-persist
-1. redux-thunk
-1. reselect
-
-# extra libraries
-
-1. npm install react-slideshow-image . https://github.com/femioladeji/react-slideshow
-
-# general notes
-
-Shows the following basic things about react.
-
-1. How to create a brand new react js project.
-1. using bootstrap via react-bootstrap
-1. created new components
-1. passing objects between components
-1. showing image
-1. created new components in folders. 
-1. take input and show text output 
-1. console logging
-1. using buttons
-1. using react-router to create routes and basic navigation with menu
-
-Note : After looking at this, I would strongly recommend, you look at this. [React JS Starter — Consumes NASA APOD API with Redux and Thunks](https://medium.com/p/e21e138a8b49). This will show you how to use redux and consuming web apis.
-
-# Local host running 
-
-1. Local:            http://localhost:3000
-1. On Your Network:  http://192.168.29.208:3000
-
-Note : When doing react JS, I would strongly recommending using two computers. One computer for coding. One computer for debugging over a network. Or, you can have two monitors.
-
-# Setting Up Project and Running
-
-```
-    npx create-react-app my-app
-    cd my-app
-    npm start
-
-```
-
-1. npm install. Installs all neccessary node modules. 
-1. npm start
-
-# Notes - General
-
-1. I have put comments and console logs (caveman debugging) all over the place. ensure you have console open when you are running the app. 
-1. This is basic react js without any extra libraries installed.
-1. So, there is no routing or anything. just a standard and true, 'single page application'. There is only one page and nothing else.
-1. Note how, some components look like this. (starting with curly braces)
+1. even if your app runs just fine, locally, you will get a lot of problems when you deploy.
+1. I had to use "build": "CI=false && react-scripts build". usually, the "CI=false" is not neccessary, if your react code is perfect and has zero warnings. mine has a lot of warnings, and I did not want to fix it.
+1. unit tests. I did not want any unit tests to run. so, I removed the 'test' section from package.json.
+1. you have to make sure, you 'zip' the deployment files. Otherwise, build will take 40 to 50 minutes to complete. same with deployment. check, 'azurereactjs.yaml' for more details
     ```
-        const ShowSomeStuff = ({someObject1,someObject2}) => {
-    ```
-1. and other components look like this. (starting with small brackets)
-    ```
-        const ShowImageAgain = () => (
-    ```
-1. Aim to have something like this, without too many warnings in the terminal console.
-    ```
-    Compiled successfully!
+    - name: Zip artifact for deployment
+      run: zip release.zip ./* -r
 
-    You can now view helloworld in the browser.
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: node-app
+        path: release.zip
 
-    Local:            http://localhost:3000
-    On Your Network:  http://192.168.29.208:3000
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: node-app
 
-    Note that the development build is not optimized.
-    To create a production build, use npm run build.
-
-    webpack compiled successfully    
+    - name: unzip artifact for deployment
+      run: unzip release.zip          
     ```
+1. now, even after all this, you will not have build errors. but, you will still get plenty of deployment errors.
+1. timeouts can happen.
+1. the target web app might not be powerful enough, storage, RAM, network bandwidth on azure, to perform the deployment. 
+1. the deployment step can take anywhere from 10 to 20 minutes. 
 
 # References
 
-1. https://reactjs.org/docs/hello-world.html
-1. https://reactjs.org/docs/create-a-new-react-app.html
-1. https://www.bootstrapcdn.com/
-1. https://unsplash.com/@jay_neeruhaaku
-1. https://medium.com/p/e21e138a8b49
+1. https://stackoverflow.com/questions/62663451/treating-warnings-as-errors-because-process-env-ci-true-failed-to-compile
+1. https://stackoverflow.com/questions/69400583/github-actions-artifact-is-taking-to-much-to-deploy-in-azure-web-apps
+1. https://stackoverflow.com/questions/68470162/how-to-archive-files-in-artifact-for-github-workflow-actions-in-order-to-fix-thi
+1. https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-nodejs-to-azure-app-service
+1. https://medium.com/projectwt/github-actions-vanilla-js-bootstrap-azure-web-app-f17a24418321
 
 # Hire Me
 
