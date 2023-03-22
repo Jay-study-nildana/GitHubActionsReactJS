@@ -4,9 +4,20 @@ reacj hello world for 2023
 
 note: this is borrowed from my react js project, available, here, https://github.com/Jay-study-nildana/FrontEndForStudents/tree/main/ReactJSForStudents/helloworld2023
 
+see this live, here, https://githubactionsreactjscodingtutorjay1.azurewebsites.net/
+
+note: running this azure app costs money, so, it may not be running when you come to look at this code. the code is perfect, but, i may have shut down the app, to save costs.
+
 # things to remember
 
 1. even if your app runs just fine, locally, you will get a lot of problems when you deploy.
+1. make sure, the env values are updated immediately to match your azure web app.
+    ```
+    env:
+    AZURE_WEBAPP_NAME: GitHubActionsReactJScodingtutorjay1   # set this to your application's name
+    AZURE_WEBAPP_PACKAGE_PATH: 'build'      # set this to the path to your web app project, defaults to the repository root
+    NODE_VERSION: '14.x'                # set this to the node version to use
+    ```
 1. I had to use "build": "CI=false && react-scripts build". usually, the "CI=false" is not neccessary, if your react code is perfect and has zero warnings. mine has a lot of warnings, and I did not want to fix it.
 1. unit tests. I did not want any unit tests to run. so, I removed the 'test' section from package.json.
 1. you have to make sure, you 'zip' the deployment files. Otherwise, build will take 40 to 50 minutes to complete. same with deployment. check, 'azurereactjs.yaml' for more details
